@@ -72,55 +72,48 @@ vector <int> graph[2002];
 //bool vis[2002];
 int color[2002];
 void bfs(int v) {
-        for(int i=1;i<=v;i++) color[i]=-1;
-        int x,flag=0;
-        for (int start=1; start<=v;start++) {
-                if (color[start] == -1) {
-                        queue <int> q;
-                        q.push(start);
-                        color[start] = 1;
-                        flag=0;
-                        while (!q.empty()) {
-                                //if (flag) break;
-                                x=q.front();
-                                //cout<<" ouut "<<x<<" ";
-                                //vis[x]=true;
-                                for (int i=0; i < graph[x].size(); i++) {
-                                        //vis[*it]=true;
-                                        if (color[graph[x][i]] == -1) {
-                                                color[graph[x][i]] = !color[x];
-                                                q.push(graph[x][i]);
-                                        }
-                                        else if (color[graph[x][i]] == color[x]) {
-                                               //
-                                                flag=1;
-                                        }
-                                        //cout<<" here "<<*it;
-                                        //color[*it] = colour^1;
-                                }
-                                q.pop();
-                                if (flag) break;
-                        }
+    for(int i=1;i<=v;i++) color[i]=-1;
+    int x,flag=0;
+    for (int start=1; start<=v;start++) {
+        if (color[start] == -1) {
+            queue <int> q;
+            q.push(start);
+            color[start] = 1;
+            flag=0;
+            while (!q.empty()) {
+                x=q.front();
+                for (int i=0; i < graph[x].size(); i++) {
+                    if (color[graph[x][i]] == -1) {
+                        color[graph[x][i]] = !color[x];
+                        q.push(graph[x][i]);
+                    }
+                    else if (color[graph[x][i]] == color[x]) {
+                        flag=1;
+                    }
                 }
+                q.pop();
                 if (flag) break;
+            }
         }
-        if (!flag) printf("No suspicious bugs found!\n");
-        else printf("Suspicious bugs found!\n");
+        if (flag) break;
+    }
+    if (!flag) printf("No suspicious bugs found!\n");
+    else printf("Suspicious bugs found!\n");
 }
 int main() {
-        int v,n,x,y,t,temp;
-        t=readi();
-        temp=0;
-        for (temp=1;temp<=t;temp++) {
-                v=readi();n=readi();
-                for (int i=1;i<=v;i++) graph[i].clear();
-                for (int i=0;i<n;i++) {
-                        cin>>x>>y;
-                        graph[x].pb(y);
-                        graph[y].pb(x);
-                }
-                printf("Scenario #%d:\n",temp);
-                bfs(v);
+    int v,n,x,y,t,temp;
+    t=readi();
+    temp=0;
+    for (temp=1;temp<=t;temp++) {
+        v=readi();n=readi();
+        for (int i=1;i<=v;i++) graph[i].clear();
+        for (int i=0;i<n;i++) {
+            cin>>x>>y;
+            graph[x].pb(y);
+            graph[y].pb(x);
         }
+        printf("Scenario #%d:\n",temp);
+        bfs(v);
+    }
 return 0;
 }
